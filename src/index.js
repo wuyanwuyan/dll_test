@@ -1,29 +1,25 @@
-const path = require('path')
-const ffi = require('ffi')
-const ref = require('ref')
-const {generateBuffer, buffer2String} = require('./util')
+import Koa from 'koa'
+import path from 'path'
+import cors from '@koa/cors'
+import koaBody from 'koa-body'
+import errorHandle from "./middleware/errorHandle";
+import router from './router'
+import koaStatic from 'koa-static'
 
-// int authorization (const char* usr, const char* pwd, char* errmsg);
-// int business_handle(char *inputvalue, int outputlen ,char *outputdata, char *errmsg);
+const app = new Koa()
 
-const lib = ffi.Library(path.join(__dirname, '../dll/sieafstandard.dll'), {
-    authorization: [ref.types.int, [ref.types.CString, ref.types.CString, ref.types.CString]],
-    business_handle: [ref.types.int, [ref.types.CString, ref.types.int, ref.types.CString, ref.types.CString]]
+app.use(errorHandle);
+
+app.use(koaStatic(path.join( __dirname, './dist'), {
+  gzip: false
+}));
+
+app.use(cors())
+app.use(koaBody({ multipart: true }))
+
+app.use(router.routes())
+
+const port = 9752
+app.listen(port, () => {
+  console.log(`服务已启动，请打开下面链接访问: \nhttp://127.0.0.1:${port}`)
 })
-
-
-// let theStringBuffer = generateBuffer(1024)
-//
-// let ret = lib.authorization('username', 'sssss', theStringBuffer)
-//
-// console.log("authorization: ",buffer2String(theStringBuffer), ret)
-
-
-let outputdata = generateBuffer()
-let errmsg = generateBuffer()
-
-ret = lib.business_handle('{"funid": "12"}', 20000, outputdata, errmsg)
-
-
-console.log(buffer2String(outputdata))
-console.log(buffer2String(errmsg))

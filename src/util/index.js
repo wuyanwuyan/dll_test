@@ -1,11 +1,11 @@
-const iconv = require("iconv-lite");
+import iconv from "iconv-lite"
 
 
-exports.generateBuffer = (maxStringLength = 20000) => {
+export const generateBuffer = (maxStringLength = 20000) => {
     return Buffer.alloc(maxStringLength, 0)
 }
 
-exports.buffer2String = (buff) => {
+export const buffer2String = (buff) => {
 
     var theString = iconv.decode(buff, 'GBK');
 
