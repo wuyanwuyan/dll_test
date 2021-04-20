@@ -31,7 +31,7 @@ export default class {
 
     static async business_handle(ctx) {
         let outputdataBuffer = generateBuffer()
-        let errmsgBuffer = generateBuffer()
+        let errmsgBuffer = generateBuffer(1024)
 
         const body = ctx.request.body
         let ret = lib.business_handle(body.inputvalue, maxStringLength, outputdataBuffer, errmsgBuffer)

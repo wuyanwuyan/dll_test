@@ -14,6 +14,7 @@
     "pkgwin": "pkg -d package.json"
   },
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.13.15",
     "@koa/cors": "^3.1.0",
     "ffi": "^2.3.0",
     "iconv-lite": "^0.6.2",
@@ -27,7 +28,6 @@
     "@babel/cli": "^7.13.14",
     "@babel/core": "^7.13.15",
     "@babel/node": "^7.13.13",
-    "@babel/plugin-transform-runtime": "^7.13.15",
     "@babel/preset-env": "^7.13.15",
     "babel-plugin-transform-node-env-inline": "^0.4.3",
     "cross-env": "^7.0.3",
@@ -35,9 +35,13 @@
     "pkg": "^4.5.1"
   },
   "pkg": {
-    "scripts": "dist/**/*.js",
-    "assets": "dist/**/*",
-    "targets": ["node10-win-x86"],
+    "assets": [
+      "./dist/dll/*",
+      "./build/*"
+    ],
+    "targets": [
+      "node10-win-x86"
+    ],
     "outputPath": "exe"
   }
 }
