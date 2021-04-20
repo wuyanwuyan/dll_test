@@ -2,6 +2,7 @@
   "name": "dll_test",
   "version": "1.0.0",
   "main": "index.js",
+  "bin": "dist/index.js",
   "repository": "",
   "author": "cecdata fujian",
   "license": "MIT",
@@ -9,7 +10,8 @@
     "dev": "cross-env NODE_ENV=development nodemon --exec babel-node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:test": "cross-env NODE_ENV=test babel src/ --out-dir dist/ --copy-files",
-    "build:production": "cross-env NODE_ENV=production babel src/ --out-dir dist/ --copy-files"
+    "build:production": "cross-env NODE_ENV=production babel src/ --out-dir dist/ --copy-files",
+    "pkgwin": "pkg -d package.json"
   },
   "dependencies": {
     "@koa/cors": "^3.1.0",
@@ -29,6 +31,13 @@
     "@babel/preset-env": "^7.13.15",
     "babel-plugin-transform-node-env-inline": "^0.4.3",
     "cross-env": "^7.0.3",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "pkg": "^4.5.1"
+  },
+  "pkg": {
+    "scripts": "dist/**/*.js",
+    "assets": "dist/**/*",
+    "targets": ["node10-win-x86"],
+    "outputPath": "exe"
   }
 }
