@@ -3,11 +3,14 @@ import path from 'path'
 import ffi from 'ffi'
 import ref from 'ref'
 import {generateBuffer, buffer2String, maxStringLength} from '../lib'
+import fs from "fs"
 
 // int authorization (const char* usr, const char* pwd, char* errmsg);
 // int business_handle(char *inputvalue, int outputlen ,char *outputdata, char *errmsg);
 
-const lib = ffi.Library(path.join(__dirname, '../dll/sieafstandard.dll'), {
+// require('fs').writeFileSync('./loggg.txt', `${__dirname} , ${process.cwd()}`);
+
+const lib = ffi.Library(path.join(process.cwd(), './dll/sieafstandard.dll'), {
     authorization: [ref.types.int, [ref.types.CString, ref.types.CString, ref.types.CString]],
     business_handle: [ref.types.int, [ref.types.CString, ref.types.int, ref.types.CString, ref.types.CString]],
     read_cardnum: [ref.types.int, [ref.types.CString, ref.types.CString]],
@@ -15,6 +18,10 @@ const lib = ffi.Library(path.join(__dirname, '../dll/sieafstandard.dll'), {
 })
 
 export default class {
+    static async check_avalaible(ctx) {
+        ctx.body = resReturn()
+    }
+
     static async authorization(ctx) {
         let errmsgBuffer = generateBuffer(1024)
 

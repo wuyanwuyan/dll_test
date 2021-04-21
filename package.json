@@ -35,10 +35,7 @@
     "pkg": "^4.5.1"
   },
   "pkg": {
-    "assets": [
-      "./dist/dll/*",
-      "./build/*"
-    ],
+    "assets": [],
     "targets": [
       "node10-win-x86"
     ],
